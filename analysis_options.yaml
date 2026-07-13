@@ -1,0 +1,352 @@
+# ============================================================
+# CONFIGURAÇÃO DO LINTER PARA FLUTTER/DART
+# ============================================================
+# Este arquivo define as regras de análise estática para o projeto,
+# garantindo código limpo, consistente e com boas práticas.
+
+# ============================================================
+# 1. INCLUDE - Configuração Base
+# ============================================================
+
+# Inclui as regras padrão do Flutter Lints (conjunto oficial do time Flutter)
+# Contém regras como: prefer_const_constructors, use_key_in_widget_constructors, etc
+include: package:flutter_lints/flutter.yaml
+
+# ============================================================
+# 2. ANALYZER - Configuração do Analisador
+# ============================================================
+
+analyzer:
+  # ==========================================================
+  # EXCLUDE - Arquivos/Pastas que NÃO serão analisados
+  # ==========================================================
+  # Benefícios: Performance, foco em código real, menos falsos positivos
+  exclude:
+    
+    # --------------------------------------------------------
+    # CÓDIGO GERADO POR FERRAMENTAS (NÃO ESCRITO POR DEV)
+    # --------------------------------------------------------
+    
+    # **/*.g.dart - Arquivos gerados pelo json_serializable, floor, etc
+    # Exemplo: user.g.dart é gerado a partir de user.dart com @JsonSerializable()
+    - "**/*.g.dart"
+    
+    # **/*.freezed.dart - Gerado pelo pacote Freezed (classes imutáveis)
+    # Exemplo: user.freezed.dart é gerado a partir de user.dart com @freezed
+    - "**/*.freezed.dart"
+    
+    # **/*.gr.dart - Gerado pelo GraphQL (artemis, graphql_codegen)
+    # Exemplo: queries.gr.dart é gerado a partir de arquivos .graphql
+    - "**/*.gr.dart"
+    
+    # **/*.reflectable.dart - Gerado pelo pacote reflectable (reflexão em tempo de compilação)
+    # Usado para metaprogramação e injeção de dependência
+    - "**/*.reflectable.dart"
+    
+    # **/*.riverpod.dart - Gerado pelo Riverpod Generator (código de providers)
+    # Exemplo: providers.riverpod.dart é gerado automaticamente
+    - "**/*.riverpod.dart"
+    
+    # **/*.config.dart - Arquivos de configuração gerados (injeção de dependência)
+    # Exemplo: injector.config.dart gerado pelo get_it + injectable
+    - "**/*.config.dart"
+    
+    # **/*.gen.dart - Arquivos gerados em geral (várias ferramentas)
+    # Exemplo: assets.gen.dart gerado pelo flutter_gen
+    - "**/*.gen.dart"
+    
+    # **/*.generated.dart - Arquivos gerados em geral (várias ferramentas)
+    # Exemplo: translations.generated.dart gerado pelo intl
+    - "**/*.generated.dart"
+    
+    # **/*.floor.dart - Gerado pelo Floor (ORM para SQLite)
+    # Exemplo: database.floor.dart gerado a partir de entidades
+    - "**/*.floor.dart"
+    
+    # **/*.drift.dart - Gerado pelo Drift (ORM moderno para SQLite)
+    # Exemplo: database.drift.dart gerado a partir de tabelas
+    - "**/*.drift.dart"
+    
+    # --------------------------------------------------------
+    # BUILD E FERRAMENTAS
+    # --------------------------------------------------------
+    
+    # build/** - Pasta de build do Flutter (arquivos compilados)
+    # Contém arquivos temporários e código compilado, não precisa analisar
+    - "build/**"
+    
+    # .dart_tool/** - Pasta de ferramentas do Dart
+    # Contém cache e metadados do pub, não é código fonte
+    - ".dart_tool/**"
+    
+    # **/generated/** - Qualquer pasta 'generated' no projeto
+    # Padrão comum para código gerado automaticamente
+    - "**/generated/**"
+    
+    # --------------------------------------------------------
+    # DEPENDÊNCIAS E PLATAFORMAS (CÓDIGO NATIVO)
+    # --------------------------------------------------------
+    
+    # ios/** - Código nativo iOS (Swift/Objective-C)
+    # Não é Dart, não faz sentido analisar com linter Dart
+    - "ios/**"
+    
+    # android/** - Código nativo Android (Kotlin/Java)
+    # Não é Dart, ignorado pelo analisador Dart
+    - "android/**"
+    
+    # windows/** - Código nativo Windows (C++)
+    # Não é Dart, ignorado pelo analisador Dart
+    - "windows/**"
+    
+    # macos/** - Código nativo macOS (Swift/Objective-C)
+    # Não é Dart, ignorado pelo analisador Dart
+    - "macos/**"
+    
+    # linux/** - Código nativo Linux (C++)
+    # Não é Dart, ignorado pelo analisador Dart
+    - "linux/**"
+    
+    # web/** - Código Web (HTML/CSS/JavaScript)
+    # Não é Dart (ou é Dart compilado), ignorado
+    - "web/**"
+    
+    # --------------------------------------------------------
+    # TESTES GERADOS/MOCKS
+    # --------------------------------------------------------
+    
+    # test/fixtures/** - Dados de teste estáticos (JSON, imagens, etc)
+    # Não são código Dart, apenas dados de exemplo
+    - "test/fixtures/**"
+    
+    # test/mocks/** - Mocks gerados automaticamente (Mockito, etc)
+    # Código gerado que não precisa ser analisado
+    - "test/mocks/**"
+    
+    # test/*.mocks.dart - Arquivos de mock do Mockito
+    # Gerados por build_runner, não precisam de análise
+    - "test/*.mocks.dart"
+    
+    # --------------------------------------------------------
+    # BIBLIOTECAS EXTERNAS
+    # --------------------------------------------------------
+    
+    # lib/third_party/** - Bibliotecas de terceiros não gerenciadas pelo pub
+    # Código que não foi escrito pela equipe, não deve ser analisado
+    - "lib/third_party/**"
+    
+    # lib/external/** - Bibliotecas externas (similar a third_party)
+    # Código de fornecedores/parceiros, não precisa de análise
+    - "lib/external/**"
+    
+    # --------------------------------------------------------
+    # EXEMPLOS E DOCUMENTAÇÃO
+    # --------------------------------------------------------
+    
+    # example/** - Pasta de exemplos do projeto
+    # Código de exemplo pode ser menos rigoroso ou ter regras diferentes
+    - "example/**"
+    
+    # examples/** - Variação de 'example'
+    # Código demonstrativo, não crítico para análise
+    - "examples/**"
+    
+    # docs/** - Documentação do projeto
+    # Contém arquivos .md, imagens, etc, não são código Dart
+    - "docs/**"
+    
+    # --------------------------------------------------------
+    # ARQUIVOS DE SISTEMA/IDE
+    # --------------------------------------------------------
+    
+    # **/.idea/** - Arquivos de configuração do IntelliJ/Android Studio
+    # Metadados da IDE, não são código fonte
+    - "**/.idea/**"
+    
+    # **/.vscode/** - Arquivos de configuração do VS Code
+    # Configurações do editor, não são código fonte
+    - "**/.vscode/**"
+    
+    # **/.DS_Store - Arquivo de metadados do macOS Finder
+    # Criado automaticamente pelo sistema, não é código
+    - "**/.DS_Store"
+    
+    # **/*.iml - Arquivos de módulo do IntelliJ
+    # Metadados da IDE, não são código fonte
+    - "**/*.iml"
+    
+    # --------------------------------------------------------
+    # ASSETS (NÃO SÃO CÓDIGO)
+    # --------------------------------------------------------
+    
+    # assets/** - Pasta de recursos do app (imagens, fontes, etc)
+    # Não contém código Dart, apenas recursos binários
+    - "assets/**"
+    
+    # **/*.png - Imagens PNG
+    # Arquivos de imagem, não são código Dart
+    - "**/*.png"
+    
+    # **/*.jpg - Imagens JPG
+    # Arquivos de imagem, não são código Dart
+    - "**/*.jpg"
+    
+    # **/*.svg - Imagens SVG
+    # Arquivos de imagem, não são código Dart
+    - "**/*.svg"
+
+# ============================================================
+# 3. LINTER - Regras de Análise Estática
+# ============================================================
+# Aqui definimos regras específicas para manter a qualidade do código
+
+linter:
+  rules:
+    
+    # ========================================================
+    # ORGANIZAÇÃO DE IMPORTS
+    # ========================================================
+    
+    # directives_ordering
+    # Ordena imports em blocos específicos:
+    # 1. Imports do Dart SDK (dart:*)
+    # 2. Imports de pacotes externos (package:*)
+    # 3. Imports do próprio projeto (package:meu_app/*)
+    # 4. Imports relativos (./, ../)
+    # Benefício: Código mais organizado e fácil de navegar
+    - directives_ordering
+    
+    # avoid_relative_lib_imports
+    # Evita imports relativos (../../) dentro da pasta lib
+    # Força o uso de imports absolutos com 'package:meu_app/...'
+    # Benefício: Evita quebras quando arquivos são movidos, mais legível
+    - avoid_relative_lib_imports
+    
+    # ========================================================
+    # BOAS PRÁTICAS DE CÓDIGO
+    # ========================================================
+    
+    # avoid_print
+    # Impede o uso de print() em produção
+    # print() pode vazar informações sensíveis e poluir logs
+    # Use debugPrint() ou logger especializado para debug
+    - avoid_print
+    
+    # prefer_single_quotes
+    # Prefere aspas simples ('...') em vez de aspas duplas ("...")
+    # Benefício: Consistência no código, menos pressionar Shift
+    - prefer_single_quotes
+    
+    # require_trailing_commas
+    # Exige vírgula no final de listas, maps e parâmetros
+    # Benefício: Melhor diffs no Git, menos conflitos em PRs
+    # Exemplo: 
+    #   const MyWidget(
+    #     title: 'Hello',  // ← vírgula obrigatória
+    #     onTap: _onTap,   // ← vírgula obrigatória
+    #   )
+    - require_trailing_commas
+    
+    # sort_pub_dependencies
+    # Ordena as dependências no pubspec.yaml alfabeticamente
+    # Benefício: Fácil encontrar pacotes, menos conflitos no Git
+    - sort_pub_dependencies
+    
+    # sort_child_properties_last
+    # Coloca a propriedade 'child' por último nos widgets
+    # Benefício: Widgets mais legíveis, foco nas propriedades principais
+    # Exemplo: 
+    #   Container(
+    #     width: 100,      // ← propriedades primeiro
+    #     height: 100,     // ← propriedades primeiro
+    #     color: Colors.blue,
+    #     child: Text('Hi'), // ← child por último
+    #   )
+    - sort_child_properties_last
+    
+    # ========================================================
+    # DART MODERNO (Dart 2.17+)
+    # ========================================================
+    
+    # use_super_parameters
+    # Usa 'super' em construtores (Dart 2.17+)
+    # Benefício: Código mais conciso e moderno
+    # Exemplo: 
+    #   class MyWidget extends StatelessWidget {
+    #     const MyWidget({super.key}); // ← em vez de {Key? key}: super(key: key)
+    #   }
+    - use_super_parameters
+    
+    # ========================================================
+    # PERFORMANCE E OTIMIZAÇÃO
+    # ========================================================
+    
+    # prefer_const_constructors
+    # Prefere const em construtores quando possível
+    # Benefício: Melhor performance (widgets constantes são reutilizados)
+    # O Flutter pode otimizar e não recriar widgets const
+    - prefer_const_constructors
+    
+    # prefer_final_fields
+    # Prefere 'final' em campos que não são reatribuídos
+    # Benefício: Imutabilidade, menos bugs, código mais seguro
+    - prefer_final_fields
+    
+    # avoid_unnecessary_containers
+    # Evita Containers desnecessários que só adicionam padding/margin
+    # Benefício: Menos widgets na árvore, melhor performance
+    # Use SizedBox, Padding ou diretamente nas propriedades
+    - avoid_unnecessary_containers
+    
+    # ========================================================
+    # LEGIBILIDADE E MANUTENÇÃO
+    # ========================================================
+    
+    # prefer_is_empty
+    # Prefere .isEmpty em vez de .length == 0
+    # Benefício: Mais legível e eficiente (O(1) vs O(n))
+    # Exemplo: if (list.isEmpty) em vez de if (list.length == 0)
+    - prefer_is_empty
+    
+    # prefer_is_not_empty
+    # Prefere .isNotEmpty em vez de .length > 0
+    # Benefício: Mais legível e eficiente
+    # Exemplo: if (list.isNotEmpty) em vez de if (list.length > 0)
+    - prefer_is_not_empty
+    
+    # ========================================================
+    # TYPE SAFETY E SEGURANÇA
+    # ========================================================
+    
+    # avoid_dynamic_calls
+    # Evita chamadas em variáveis do tipo 'dynamic'
+    # Benefício: Mais type safety, evita erros em tempo de execução
+    # Exemplo: Evita (dynamicObject as String).toUpperCase() sem verificação
+    - avoid_dynamic_calls
+    
+    # cancel_subscriptions
+    # Garante que StreamSubscriptions sejam canceladas
+    # Benefício: Evita memory leaks em streams
+    # Use em StatefulWidget com dispose()
+    - cancel_subscriptions
+    
+    # close_sinks
+    # Garante que Sinks sejam fechados (StreamController, etc)
+    # Benefício: Evita memory leaks em streams
+    # Use em StatefulWidget com dispose()
+    - close_sinks
+    
+    # unawaited_futures
+    # Evita esquecer de usar 'await' em Futures
+    # Benefício: Evita bugs assíncronos, garante que Futures sejam tratadas
+    # Use unawaited(future) se realmente não precisa esperar
+    - unawaited_futures
+
+# ============================================================
+# NOTAS IMPORTANTES PARA O TIME
+# ============================================================
+# 1. Use 'dart fix --apply' para corrigir problemas automaticamente
+# 2. Em caso de dúvida, consulte: https://dart.dev/tools/linter-rules
+# 3. Altere apenas com aprovação do time
+# 4. Execute 'flutter analyze' antes de cada commit
+# ============================================================
