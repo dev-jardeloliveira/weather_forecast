@@ -1,16 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_forecast/core/constants/app_theme.dart';
-import 'package:weather_forecast/core/services/storange_services.dart';
+import 'package:weather_forecast/core/dependencies/setup_dependence.dart';
+import 'package:weather_forecast/core/services/istorage_service.dart';
 import 'package:weather_forecast/features/weather/presentation/viewmodels/weather_state.dart';
+
+final storageServicesProvider = Provider<IStorageService>((ref) {
+  return getIt<IStorageService>();
+});
 
 final weatherViewModelProvider =
     NotifierProvider<WeatherViewModel, WeatherState>(() => WeatherViewModel());
 
 class WeatherViewModel extends Notifier<WeatherState> {
-  late final StorageServices _storageServices;
+  IStorageService get _storageServices => ref.watch(storageServicesProvider);
   @override
   WeatherState build() {
-    _storageServices = ref.watch(storageServicesProvider);
     loadThemeMode();
     return WeatherState(
       appTheme: AppTheme.lightTheme,

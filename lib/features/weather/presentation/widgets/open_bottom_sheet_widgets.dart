@@ -21,7 +21,7 @@ class OpenBottomSheetWidgets extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(AppSize.size16),
             child: Column(
-              spacing: AppSize.size16,
+              spacing: AppSize.size10,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
