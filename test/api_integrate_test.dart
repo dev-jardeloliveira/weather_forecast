@@ -21,6 +21,14 @@ void main() {
       expect(response.data, isNotNull);
     });
 
+    test('Deve executar get com sucesso', () async {
+      final response = await dio.get(
+        AppEndpoint.forecast,
+        queryParameters: {'q': 'Ponte Nova', 'days': '14'},
+      );
+      expect(response.statusCode, equals(200));
+      expect(response.data, isNotNull);
+    });
     test('Deve lançar exception', () async {
       try {
         final invalidDio = await _createInvalidKey();
