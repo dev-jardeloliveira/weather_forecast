@@ -6,6 +6,8 @@ import 'package:weather_forecast/core/services/istorage_service.dart';
 import 'package:weather_forecast/core/services/iweather_api_service.dart';
 import 'package:weather_forecast/core/services/storage_services.dart';
 import 'package:weather_forecast/core/services/weather_api_service.dart';
+import 'package:weather_forecast/features/weather/data/datasources/iweather_remote_impl.dart';
+import 'package:weather_forecast/features/weather/data/datasources/weather_remote_impl.dart';
 import 'package:weather_forecast/features/weather/presentation/viewmodels/weather_vm.dart';
 
 final GetIt getIt = GetIt.asNewInstance();
@@ -17,9 +19,14 @@ Future<void> setupDependencies() async {
 
   getIt.registerLazySingleton<Dio>(() => DioClient.getInstance());
   final dioClient = DioClient.getInstance();
+
   getIt.registerLazySingleton<IWeatherApiService>(
     () => WeatherApiService(dioClient),
   );
+  final weatherApiService = getIt<IWeatherApiService>();
 
+  getIt.registerLazySingleton<IWeatherRemoteImpl>(
+    () => WeatherRemoteImpl(weatherApiService),
+  );
   getIt.registerFactory<WeatherViewModel>(() => WeatherViewModel());
 }
