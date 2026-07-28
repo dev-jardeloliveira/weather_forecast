@@ -1,11 +1,12 @@
+import 'package:logger/logger.dart';
 import 'package:weather_forecast/features/weather/data/datasources/weather_remote_impl.dart';
 import 'package:weather_forecast/features/weather/data/models/weather_current_dto.dart';
 import 'package:weather_forecast/features/weather/data/models/weather_forecast_dto.dart';
 
 class WeatherRepoImpl {
   final WeatherRemoteImpl _weatherRemoteImpl;
+  var log = Logger(printer: PrettyPrinter(printEmojis: true));
   WeatherRepoImpl(this._weatherRemoteImpl);
-
   Future<WeatherCurrentDto?> getWeatherCurrentRepo({
     String? q,
     String? lang,
@@ -21,6 +22,7 @@ class WeatherRepoImpl {
       }
       return result;
     } catch (e) {
+      log.e('Erro ao fazer get em:getWeatherCurrentRepo', error: e);
       rethrow;
     }
   }
@@ -40,6 +42,7 @@ class WeatherRepoImpl {
       }
       return result;
     } catch (e) {
+      log.e('Erro ao fazer get em:getWeatherForecastRepo', error: e);
       rethrow;
     }
   }

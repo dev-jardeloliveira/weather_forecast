@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
 import 'package:weather_forecast/core/constants/app_endpoint.dart';
 import 'package:weather_forecast/core/services/iweather_api_service.dart';
 import 'package:weather_forecast/core/services/models/current_response.dart';
@@ -6,6 +7,8 @@ import 'package:weather_forecast/core/services/models/forecast_response.dart';
 
 class WeatherApiService implements IWeatherApiService {
   final Dio _dio;
+  var log = Logger(printer: PrettyPrinter(printEmojis: true));
+
   WeatherApiService(this._dio);
   @override
   Future<CurrentResponse?> current({String? q, String? lang}) async {
@@ -20,8 +23,10 @@ class WeatherApiService implements IWeatherApiService {
       }
       return null;
     } on DioException catch (e) {
+      log.e('Erro ao buscar o clima atual em: current', error: e.message);
       throw Exception(e.message ?? 'Erro ao buscar o clima atual');
     } catch (e) {
+      log.e('Erro ao processar os dados em: current', error: e);
       throw Exception('Erro ao processar os dados, erro: $e');
     }
   }
@@ -39,8 +44,10 @@ class WeatherApiService implements IWeatherApiService {
       }
       return null;
     } on DioException catch (e) {
+      log.e('Erro ao buscar a previsão do tempo: current', error: e.message);
       throw Exception(e.message ?? 'Erro ao buscar a previsão do tempo');
     } catch (e) {
+      log.e('Erro ao processar os dados em: current', error: e);
       throw Exception('Erro ao processar os dados, erro: $e');
     }
   }

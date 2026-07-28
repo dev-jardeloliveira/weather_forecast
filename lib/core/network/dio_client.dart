@@ -24,7 +24,6 @@ class DioClient {
 
   static Interceptor _apiKeyInterceptor() {
     String apiKey = dotenv.get('WEATHER_API_KEY');
-
     return InterceptorsWrapper(
       onRequest: (options, handler) {
         if (apiKey.isEmpty) {

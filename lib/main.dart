@@ -11,9 +11,8 @@ void main() async {
   // CORREÇÃO: Garante a inicialização das bindings do Flutter antes de qualquer outra lógica
   WidgetsFlutterBinding.ensureInitialized();
 
-  await setupDependencies();
-
   await dotenv.load();
+  await setupDependencies();
 
   runApp(const ProviderScope(child: WeatherApp()));
 }
