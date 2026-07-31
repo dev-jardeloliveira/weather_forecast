@@ -8,6 +8,8 @@ import 'package:weather_forecast/core/services/storage_services.dart';
 import 'package:weather_forecast/core/services/weather_api_service.dart';
 import 'package:weather_forecast/features/weather/data/datasources/weather_remote_impl.dart';
 import 'package:weather_forecast/features/weather/data/repositories/weather_repo_impl.dart';
+import 'package:weather_forecast/features/weather/domain/usecase/get_current_weather_us.dart';
+import 'package:weather_forecast/features/weather/domain/usecase/get_forecast_weather_us.dart';
 import 'package:weather_forecast/features/weather/presentation/viewmodels/weather_vm.dart';
 
 final GetIt getIt = GetIt.asNewInstance();
@@ -32,6 +34,12 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<WeatherRepoImpl>(
     () => WeatherRepoImpl(weatherRemoteImpl),
   );
-
+  final weatherRepoImpl = getIt<WeatherRepoImpl>();
+  getIt.registerLazySingleton<GetCurrentWeatherUseCase>(
+    () => GetCurrentWeatherUseCase(repository: weatherRepoImpl),
+  );
+  getIt.registerLazySingleton<GetForecastWeatherUserCase>(
+    () => GetForecastWeatherUserCase(repository: weatherRepoImpl),
+  );
   getIt.registerFactory<WeatherViewModel>(() => WeatherViewModel());
 }

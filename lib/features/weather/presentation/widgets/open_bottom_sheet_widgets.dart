@@ -6,15 +6,22 @@ import 'package:weather_forecast/features/weather/presentation/viewmodels/weathe
 
 class OpenBottomSheetWidgets extends StatelessWidget {
   final MediaQueryData mediaQuery;
+  final WeatherViewModel viewModel;
+  final int selectCurrent;
 
-  const OpenBottomSheetWidgets({super.key, required this.mediaQuery});
+  const OpenBottomSheetWidgets({
+    super.key,
+    required this.mediaQuery,
+    required this.viewModel,
+    required this.selectCurrent,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
-        final viewModel = ref.watch(weatherViewModelProvider.notifier);
-        final currentTheme = ref.watch(weatherViewModelProvider);
+        //final viewModel = ref.watch(weatherViewModelProvider.notifier);
+        //final currentTheme = ref.watch(weatherViewModelProvider);
 
         return SizedBox(
           height: mediaQuery.size.height * 0.3,
@@ -40,7 +47,7 @@ class OpenBottomSheetWidgets extends StatelessWidget {
                 const Center(child: Text(AppString.selectThemeOptions)),
 
                 ToggleButtons(
-                  isSelected: currentTheme.selectedTheme == 0
+                  isSelected: selectCurrent == 0
                       ? [true, false]
                       : [false, true],
                   onPressed: (int index) {
