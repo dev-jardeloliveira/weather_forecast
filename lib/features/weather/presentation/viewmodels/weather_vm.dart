@@ -89,7 +89,12 @@ class WeatherViewModel extends Notifier<WeatherState> {
   //Data
   Future<void> searchDataWeather({String? city, String? lang}) async {
     final currentWeather = await _getCurrentUS.execute(q: city, lang: lang);
-    state.weatherCurrentDto = currentWeather;
+    if (currentWeather == null) return;
+    state = state.copyWith(
+      selectedTheme: state.selectedTheme,
+      isSelectedLst: state.isSelectedLst,
+      weatherCurrentDto: currentWeather,
+    );
   }
 
   void selectedTheme(int index) {

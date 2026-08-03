@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:weather_forecast/core/constants/app_color.dart';
 import 'package:weather_forecast/core/constants/app_size.dart';
 import 'package:weather_forecast/core/constants/app_string.dart';
 import 'package:weather_forecast/features/weather/presentation/viewmodels/weather_vm.dart';
@@ -28,7 +29,31 @@ class WeatherView extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          Center(child: Text(currentTheme.weatherCurrentDto!.location.name)),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Card(
+                  color: AppColor.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppSize.size20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(currentTheme.weatherCurrentDto!.location.name),
+                        Text(
+                          currentTheme.weatherCurrentDto!.current.tempC
+                              .toString(),
+                          style: const TextStyle(fontSize: AppSize.size30),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
           TextButton(
             onPressed: () =>
                 viewModel.searchDataWeather(city: 'Ponte Nova', lang: 'pt-br'),
