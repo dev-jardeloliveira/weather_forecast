@@ -28,7 +28,7 @@ class AppTheme {
     // ------------------------------------------------
     // Cor de fundo padrão para telas (Scaffold)
     // No tema escuro, usamos um cinza bem escuro (#121212)
-    scaffoldBackgroundColor: AppColor.backgroundDark,
+    scaffoldBackgroundColor: AppColor.surfaceDark,
 
     // ESQUEMA DE CORES COMPLETO (COLOR SCHEME)
     // ------------------------------------------------
@@ -229,7 +229,7 @@ class AppTheme {
             Color(0xFF0f3460), // Azul mais claro
           ],
         ),
-        cardColor: const Color(0xFF2d2d44),
+        cardColor: AppColor.surfaceDark,
         detalheIconColor: Colors.blueAccent,
       ),
     ],

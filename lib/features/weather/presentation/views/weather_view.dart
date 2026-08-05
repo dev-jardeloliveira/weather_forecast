@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:weather_forecast/core/constants/app_color.dart';
 import 'package:weather_forecast/core/constants/app_size.dart';
 import 'package:weather_forecast/core/constants/app_string.dart';
+import 'package:weather_forecast/core/selectors/weather_theme_selector.dart';
 import 'package:weather_forecast/features/weather/presentation/viewmodels/weather_vm.dart';
 import 'package:weather_forecast/features/weather/presentation/widgets/open_bottom_sheet_widgets.dart';
+import 'package:weather_forecast/features/weather/presentation/widgets/weather_data_forecast_widgets.dart';
 
 class WeatherView extends ConsumerWidget {
   const WeatherView({super.key});
@@ -35,7 +36,7 @@ class WeatherView extends ConsumerWidget {
             children: [
               Expanded(
                 child: Card(
-                  color: AppColor.white,
+                  color: context.weatherTheme.cardColor,
                   child: Padding(
                     padding: const EdgeInsets.all(AppSize.size20),
                     child: Column(
@@ -59,6 +60,7 @@ class WeatherView extends ConsumerWidget {
                 viewModel.searchDataWeather(city: 'Ponte Nova', lang: 'pt-br'),
             child: const Text('Carregar'),
           ),
+          const Expanded(child: WeatherDataForecastWidgets()),
         ],
       ),
     );
