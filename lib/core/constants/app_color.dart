@@ -29,5 +29,6 @@ class AppColor {
   static const Color backgroundLight = Color(0xFFF5F5F5);
   static const Color black = Color(0xFF1E1E1E);
   static const Color white = Color(0xFFFFFFFF);
+  static const Color hintColor = Color(0xFF9E9E9E);
   //Cores adicionais
 }

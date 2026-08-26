@@ -67,4 +67,10 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
+<dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to your location to provide weather forecasts for your area.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app needs access to your location to provide weather forecasts for your area.</string>
+	</dict>
 </plist>

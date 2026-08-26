@@ -1,6 +1,27 @@
 import 'package:weather_forecast/core/services/models/forecast_response.dart';
 
-class Current {
+// ============= CONDITION =============
+class ConditionDto {
+  final String text;
+  final String icon;
+  final int code;
+
+  ConditionDto({required this.text, required this.icon, required this.code});
+
+  factory ConditionDto.fromJson(Map<String, dynamic> json) {
+    return ConditionDto(
+      text: json['text'] ?? '',
+      icon: json['icon'].toString().replaceAll('//', 'http://'),
+      code: json['code'] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'text': text, 'icon': icon, 'code': code};
+  }
+}
+
+class CurrentForecast {
   final String lastUpdated;
   final double tempC;
   final double tempF;
@@ -10,7 +31,7 @@ class Current {
   final double feelslikeF;
   final double uv;
 
-  Current({
+  CurrentForecast({
     required this.lastUpdated,
     required this.tempC,
     required this.tempF,
@@ -21,8 +42,8 @@ class Current {
     required this.uv,
   });
 
-  factory Current.fromResponse(ForecastResponse response) {
-    return Current(
+  factory CurrentForecast.fromResponse(ForecastResponse response) {
+    return CurrentForecast(
       lastUpdated: response.current.lastUpdated,
       tempC: response.current.tempC,
       tempF: response.current.tempF,
@@ -67,6 +88,7 @@ class Day {
   final int dailyWillItSnow;
   final int dailyChanceOfSnow;
   final double uv;
+  final ConditionDto condition;
 
   Day({
     required this.maxtempC,
@@ -87,6 +109,7 @@ class Day {
     required this.dailyWillItSnow,
     required this.dailyChanceOfSnow,
     required this.uv,
+    required this.condition,
   });
 
   factory Day.fromJson(Map<String, dynamic> json) {
@@ -109,6 +132,7 @@ class Day {
       dailyWillItSnow: json['daily_will_it_snow'] ?? 0,
       dailyChanceOfSnow: json['daily_chance_of_snow'] ?? 0,
       uv: json['uv'] ?? 0,
+      condition: ConditionDto.fromJson(json['condition']),
     );
   }
 
@@ -132,42 +156,27 @@ class Day {
       'daily_will_it_snow': dailyWillItSnow,
       'daily_chance_of_snow': dailyChanceOfSnow,
       'uv': uv,
+      'condition': condition.toJson(),
     };
   }
 }
 
-class Forecast {
-  final List<ForecastDay> forecastday;
-
-  Forecast({required this.forecastday});
-
-  factory Forecast.fromResponse(ForecastResponse response) {
-    return Forecast(
-      forecastday: response.forecast.forecastday as List<ForecastDay>,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {'forecastday': forecastday.map((item) => item.toJson()).toList()};
-  }
-}
-
 // ============= FORECAST DAY =============
-class ForecastDay {
+class ForecastDayDto {
   final String date;
   final int dateEpoch;
   final Day day;
   final List<Hour> hour;
 
-  ForecastDay({
+  ForecastDayDto({
     required this.date,
     required this.dateEpoch,
     required this.day,
     required this.hour,
   });
 
-  factory ForecastDay.fromJson(Map<String, dynamic> json) {
-    return ForecastDay(
+  factory ForecastDayDto.fromJson(Map<String, dynamic> json) {
+    return ForecastDayDto(
       date: json['date'] ?? '',
       dateEpoch: json['date_epoch'] ?? 0,
       day: Day.fromJson(json['day'] ?? {}),
@@ -186,6 +195,29 @@ class ForecastDay {
       'day': day.toJson(),
       'hour': hour.map((item) => item.toJson()).toList(),
     };
+  }
+}
+
+class ForecastDto {
+  final List<ForecastDayDto> forecastday;
+
+  ForecastDto({required this.forecastday});
+
+  factory ForecastDto.fromResponse(ForecastResponse response) {
+    return ForecastDto(
+      forecastday: response.forecast.forecastday.map((day) {
+        return ForecastDayDto(
+          date: day.date,
+          dateEpoch: day.dateEpoch,
+          day: Day.fromJson(day.day.toJson()),
+          hour: day.hour.map((item) => Hour.fromJson(item.toJson())).toList(),
+        );
+      }).toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'forecastday': forecastday.map((item) => item.toJson()).toList()};
   }
 }
 
@@ -334,21 +366,21 @@ class Hour {
 }
 
 // ============= LOCATION =============
-class Location {
+class LocationForecast {
   final String name;
   final String region;
   final String country;
   final String localtime;
 
-  Location({
+  LocationForecast({
     required this.name,
     required this.region,
     required this.country,
     required this.localtime,
   });
 
-  factory Location.fromResponse(ForecastResponse response) {
-    return Location(
+  factory LocationForecast.fromResponse(ForecastResponse response) {
+    return LocationForecast(
       name: response.location.name,
       region: response.location.region,
       country: response.location.country,
@@ -367,9 +399,9 @@ class Location {
 }
 
 class WeatherForecastDto {
-  final Location location;
-  final Current current;
-  final Forecast forecast;
+  final LocationForecast location;
+  final CurrentForecast current;
+  final ForecastDto forecast;
 
   WeatherForecastDto({
     required this.forecast,
@@ -379,9 +411,9 @@ class WeatherForecastDto {
 
   factory WeatherForecastDto.fromResponse(ForecastResponse response) {
     return WeatherForecastDto(
-      forecast: Forecast.fromResponse(response),
-      current: Current.fromResponse(response),
-      location: Location.fromResponse(response),
+      forecast: ForecastDto.fromResponse(response),
+      current: CurrentForecast.fromResponse(response),
+      location: LocationForecast.fromResponse(response),
     );
   }
 }

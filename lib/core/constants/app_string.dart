@@ -6,4 +6,6 @@ class AppString {
   static const String light = 'Light';
   static const String dark = 'Dark';
   static const String selectThemeOptions = 'Select Theme Options';
+  static const String titleLocation = 'Minha localização';
+  static const String searchCity = 'Pesquisar cidade';
 }

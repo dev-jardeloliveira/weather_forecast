@@ -2,8 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_forecast/core/network/dio_client.dart';
+import 'package:weather_forecast/core/services/geolocation_service.dart';
+import 'package:weather_forecast/core/services/igeolocation_service.dart';
+import 'package:weather_forecast/core/services/ipermission_service.dart';
 import 'package:weather_forecast/core/services/istorage_service.dart';
 import 'package:weather_forecast/core/services/iweather_api_service.dart';
+import 'package:weather_forecast/core/services/permission_service.dart';
 import 'package:weather_forecast/core/services/storage_services.dart';
 import 'package:weather_forecast/core/services/weather_api_service.dart';
 import 'package:weather_forecast/features/weather/data/datasources/weather_remote_impl.dart';
@@ -42,4 +46,6 @@ Future<void> setupDependencies() async {
     () => GetForecastWeatherUserCase(repository: weatherRepoImpl),
   );
   getIt.registerFactory<WeatherViewModel>(() => WeatherViewModel());
+  getIt.registerLazySingleton<IPermissionService>(() => PermissionService());
+  getIt.registerLazySingleton<IGeolocationService>(() => GeolocationService());
 }

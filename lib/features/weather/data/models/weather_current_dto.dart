@@ -1,5 +1,25 @@
 import 'package:weather_forecast/core/services/models/current_response.dart';
 
+class Condition {
+  final String text;
+  final String icon;
+  final int code;
+
+  Condition({required this.text, required this.icon, required this.code});
+
+  factory Condition.fromJson(Map<String, dynamic> json) {
+    String iconUrl = json['icon'];
+    if (iconUrl.toString().isNotEmpty) {
+      iconUrl = json['icon'].toString().replaceAll('//', 'http://');
+    }
+    return Condition(text: json['text'], icon: iconUrl, code: json['code']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'text': text, 'icon': icon, 'code': code};
+  }
+}
+
 class Current {
   final String lastUpdated;
   final double tempC;
@@ -9,6 +29,7 @@ class Current {
   final double feelslikeC;
   final double feelslikeF;
   final double uv;
+  final Condition condition;
 
   Current({
     required this.lastUpdated,
@@ -19,6 +40,7 @@ class Current {
     required this.feelslikeC,
     required this.feelslikeF,
     required this.uv,
+    required this.condition,
   });
 
   factory Current.fromResponse(CurrentResponse response) {
@@ -31,6 +53,7 @@ class Current {
       feelslikeC: response.current.feelslikeC,
       feelslikeF: response.current.feelslikeF,
       uv: response.current.uv,
+      condition: Condition.fromJson(response.current.condition.toJson()),
     );
   }
 
@@ -44,6 +67,7 @@ class Current {
       'feelslike_c': feelslikeC,
       'feelslike_f': feelslikeF,
       'uv': uv,
+      'condition': condition.toJson(),
     };
   }
 }

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:weather_forecast/core/constants/app_color.dart';
+import 'package:weather_forecast/core/constants/app_size.dart';
 import 'package:weather_forecast/core/extensions/weather_theme_extension.dart';
 
 class AppTheme {
@@ -218,6 +219,19 @@ class AppTheme {
       thumbColor: WidgetStateProperty.all(AppColor.white),
       trackColor: WidgetStateProperty.all(AppColor.black),
     ),
+    searchBarTheme: SearchBarThemeData(
+      hintStyle: WidgetStateProperty.all(
+        const TextStyle(color: AppColor.hintColor),
+      ),
+      backgroundColor: WidgetStateProperty.all(AppColor.surfaceDark),
+      elevation: WidgetStateProperty.all(AppSize.size2),
+      shadowColor: WidgetStateProperty.all(AppColor.white),
+      shape: WidgetStateProperty.all(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSize.size30),
+        ),
+      ),
+    ),
     extensions: [
       WeatherThemeExtension(
         backgroundGradient: const LinearGradient(
@@ -404,6 +418,22 @@ class AppTheme {
       thumbColor: WidgetStateProperty.all(AppColor.primaryColor),
       trackColor: WidgetStateProperty.all(
         AppColor.primaryColor.withValues(alpha: 0.5),
+      ),
+    ),
+    searchBarTheme: SearchBarThemeData(
+      textStyle: WidgetStateProperty.all(
+        const TextStyle(color: AppColor.black),
+      ),
+      hintStyle: WidgetStateProperty.all(
+        const TextStyle(color: AppColor.hintColor),
+      ),
+      backgroundColor: WidgetStateProperty.all(AppColor.white),
+      elevation: WidgetStateProperty.all(AppSize.size2),
+      shadowColor: WidgetStateProperty.all(AppColor.black),
+      shape: WidgetStateProperty.all(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSize.size30),
+        ),
       ),
     ),
     extensions: [
