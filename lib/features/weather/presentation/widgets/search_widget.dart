@@ -9,15 +9,18 @@ class SearchWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(weatherViewModelProvider.notifier);
-    return SearchBar(
-      hintText: AppString.searchCity,
-      leading: const Icon(Icons.search),
-      onSubmitted: (value) {
-        final city = value.trim();
-        if (city.isNotEmpty && city.length >= 3) {
-          viewModel.searchDataWeather(city: city, lang: 'pt-br', days: 14);
-        }
-      },
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 370),
+      child: SearchBar(
+        hintText: AppString.searchCity,
+        leading: const Icon(Icons.search),
+        onSubmitted: (value) {
+          final city = value.trim();
+          if (city.isNotEmpty && city.length >= 3) {
+            viewModel.searchDataWeather(city: city, lang: 'pt-br', days: 14);
+          }
+        },
+      ),
     );
   }
 }

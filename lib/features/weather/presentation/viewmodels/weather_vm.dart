@@ -100,8 +100,17 @@ class WeatherViewModel extends Notifier<WeatherState> {
   Future<void> getCurrentLocation() async {
     try {
       final placemark = await _geolocationService.getCurrentLocation();
-      final city = placemark?.locality ?? 'Brasilia';
-      if (city.isEmpty) {
+      final cityOld = await _storageServices.getString(key: 'lastLocation');
+      await _storageServices.setString(
+        key: 'lastLocation',
+        value: placemark?.locality != null && placemark?.locality != ''
+            ? placemark?.locality
+            : cityOld != null && cityOld.isNotEmpty
+            ? cityOld
+            : 'Brasilia',
+      );
+      final city = await _storageServices.getString(key: 'lastLocation');
+      if (city == null || city.isEmpty) {
         throw Exception('City name is empty.');
       }
       await searchDataWeather(city: city, days: 14);
@@ -199,6 +208,7 @@ class WeatherViewModel extends Notifier<WeatherState> {
     String? lang,
     int? days,
   }) async {
+    await _storageServices.setString(key: 'lastLocation', value: city);
     final currentWeather = await _getCurrentUS.execute(q: city, lang: lang);
     final forecastWeather = await ref
         .watch(getForecastUserCaseProvider)
@@ -212,7 +222,7 @@ class WeatherViewModel extends Notifier<WeatherState> {
     );
   }
 
-  void selectedTheme(int index) {
+  void selectedTheme(int index) async {
     if (state.selectedTheme == index) return;
     final islight = index == 0;
     state = state.copyWith(
@@ -254,7 +264,8 @@ class WeatherViewModel extends Notifier<WeatherState> {
         ),
       ),
     );
-    _storageServices.set(key: 'themeMode', value: index);
+    await getCurrentLocation();
+    await _storageServices.set(key: 'themeMode', value: index);
   }
 
   void toggleTheme() {

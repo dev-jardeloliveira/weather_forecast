@@ -10,7 +10,6 @@ import 'package:weather_forecast/features/weather/presentation/views/weather_vie
 void main() async {
   // CORREÇÃO: Garante a inicialização das bindings do Flutter antes de qualquer outra lógica
   WidgetsFlutterBinding.ensureInitialized();
-
   await dotenv.load();
   await setupDependencies();
 

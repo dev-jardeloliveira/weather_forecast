@@ -11,10 +11,22 @@ class MockStorage implements IStorageService {
   }
 
   @override
+  Future<String?> getString({String? key}) {
+    // TODO: implement getString
+    throw UnimplementedError();
+  }
+
+  @override
   Future<void> set({String? key, int? value}) async {
     if (key == null || value == null) {
       throw ArgumentError('Key or value null');
     }
     _mock[key] = value;
+  }
+
+  @override
+  Future<void> setString({String? key, String? value}) {
+    // TODO: implement setString
+    throw UnimplementedError();
   }
 }

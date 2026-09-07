@@ -20,11 +20,29 @@ class StorageServices implements IStorageService {
   }
 
   @override
+  Future<String?> getString({String? key}) async {
+    if (key == null) {
+      throw ArgumentError('Key cannot be null');
+    }
+    final SharedPreferences prefs = _prefs;
+    return prefs.getString(key);
+  }
+
+  @override
   Future<void> set({String? key, int? value}) async {
     if (key == null || value == null) {
       throw ArgumentError('Key and value cannot be null');
     }
     final SharedPreferences prefs = _prefs;
     await prefs.setInt(key, value);
+  }
+
+  @override
+  Future<void> setString({String? key, String? value}) async {
+    if (key == null || value == null) {
+      throw ArgumentError('Key and value cannot be null');
+    }
+    final SharedPreferences prefs = _prefs;
+    await prefs.setString(key, value);
   }
 }

@@ -29,7 +29,7 @@ class WeatherView extends ConsumerWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     spacing: AppSize.size10,
-                    children: [SearchWidget(), CardCurrentWidget()],
+                    children: [if (true) SearchWidget(), CardCurrentWidget()],
                   ),
                 ),
               ),
