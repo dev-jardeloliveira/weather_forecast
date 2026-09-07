@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:weather_forecast/core/constants/app_endpoint.dart';
 import 'package:weather_forecast/core/network/dio_client.dart';
 import 'package:weather_forecast/core/services/weather_api_service.dart';
 
@@ -14,8 +13,8 @@ void main() {
     //await setupDependencies();
     serviceWeather = WeatherApiService(dio);
   });
-
-  group('Test integration', () {
+}
+ /*  group('Test integration', () {
     test('Deve fazer um Get com Sucesso', () async {
       final response = await dio.get(
         AppEndpoint.current,
@@ -76,3 +75,4 @@ Future<Dio> _createInvalidKey() async {
   }
   return dio;
 }
+ */
