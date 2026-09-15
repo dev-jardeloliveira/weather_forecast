@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:weather_forecast/core/constants/app_color.dart';
 import 'package:weather_forecast/core/constants/app_size.dart';
 import 'package:weather_forecast/features/weather/data/models/weather_forecast_dto.dart';
 
@@ -14,6 +15,7 @@ class CardForecastWidget extends StatelessWidget {
         : DateTime.now();
 
     return Card(
+      color: AppColor.white.withValues(alpha: 0.5),
       child: Padding(
         padding: const EdgeInsets.all(AppSize.size25),
         child: Row(

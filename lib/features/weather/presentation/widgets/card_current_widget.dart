@@ -23,36 +23,48 @@ class CardCurrentWidget extends ConsumerWidget {
       locationName = currentTheme.weatherCurrentDto?.location.name ?? '';
     }
     return Card.outlined(
-      color: AppColor.transparent,
+      color: AppColor.white.withValues(alpha: 0.2),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppSize.size0),
+        borderRadius: BorderRadius.circular(AppSize.size100),
       ),
       elevation: AppSize.size0,
       child: Padding(
-        padding: const EdgeInsets.all(AppSize.size20),
+        padding: const EdgeInsets.all(AppSize.size30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (iconUrl.isNotEmpty)
-              Image.network(iconUrl, width: 50, height: 50, scale: 0.5),
+              Image.network(iconUrl, width: 50, height: 50, scale: 0.3),
             Text(
               '${tempC.toString()} °c',
-              style: const TextStyle(fontSize: AppSize.size30),
+              style: const TextStyle(
+                fontSize: AppSize.size30,
+                fontWeight: FontWeight.bold,
+              ),
             ),
 
             Text(
               locationName,
               style: const TextStyle(
-                fontSize: AppSize.size12,
+                fontSize: AppSize.size16,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const Text(
               AppString.titleLocation,
-              style: TextStyle(fontSize: AppSize.size10),
+              style: TextStyle(
+                fontSize: AppSize.size8,
+                fontWeight: FontWeight.normal,
+              ),
             ),
 
-            Text(lastUpdated, style: const TextStyle(fontSize: AppSize.size8)),
+            Text(
+              lastUpdated,
+              style: const TextStyle(
+                fontSize: AppSize.size10,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
       ),
