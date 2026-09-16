@@ -80,48 +80,45 @@ class AppTheme {
       const TextTheme(
         // Títulos grandes (Display)
         displayLarge: TextStyle(
-          color: Colors.white,
+          color: Colors.black,
           fontSize: 32,
           fontWeight: FontWeight.bold,
         ),
         displayMedium: TextStyle(
-          color: Colors.white,
+          color: Colors.black,
           fontSize: 28,
           fontWeight: FontWeight.bold,
         ),
         displaySmall: TextStyle(
-          color: Colors.white,
+          color: Colors.black,
           fontSize: 24,
           fontWeight: FontWeight.bold,
         ),
 
         // Títulos (Headline)
         headlineMedium: TextStyle(
-          color: Colors.white,
+          color: Colors.black,
           fontSize: 20,
           fontWeight: FontWeight.w600,
         ),
         headlineSmall: TextStyle(
-          color: Colors.white,
+          color: Colors.black,
           fontSize: 18,
           fontWeight: FontWeight.w600,
         ),
 
         // Títulos menores (Title)
         titleLarge: TextStyle(
-          color: Colors.white,
+          color: Colors.black,
           fontSize: 16,
           fontWeight: FontWeight.w500,
         ),
 
         // Corpo do texto (Body)
-        bodyLarge: TextStyle(
-          color: Colors.white70, // 70% de opacidade (mais suave)
-          fontSize: 16,
-        ),
-        bodyMedium: TextStyle(color: Colors.white70, fontSize: 14),
+        bodyLarge: TextStyle(color: Colors.black, fontSize: 16),
+        bodyMedium: TextStyle(color: Colors.black, fontSize: 14),
         bodySmall: TextStyle(
-          color: Colors.white54, // 54% de opacidade (ainda mais suave)
+          color: Colors.black, // 54% de opacidade (ainda mais suave)
           fontSize: 12,
         ),
       ),
@@ -130,7 +127,7 @@ class AppTheme {
     // ESTILO DOS ÍCONES
     // ------------------------------------------------
     // Define a cor e tamanho padrão dos ícones
-    iconTheme: const IconThemeData(color: Colors.white, size: 24),
+    iconTheme: const IconThemeData(color: Colors.black, size: 24),
 
     // ESTILO DOS BOTÕES ELEVADOS
     // ------------------------------------------------
@@ -220,12 +217,15 @@ class AppTheme {
       trackColor: WidgetStateProperty.all(AppColor.black),
     ),
     searchBarTheme: SearchBarThemeData(
+      textStyle: WidgetStateProperty.all(
+        const TextStyle(color: AppColor.black),
+      ),
       hintStyle: WidgetStateProperty.all(
         const TextStyle(color: AppColor.hintColor),
       ),
-      backgroundColor: WidgetStateProperty.all(AppColor.surfaceDark),
+      backgroundColor: WidgetStateProperty.all(AppColor.white),
       elevation: WidgetStateProperty.all(AppSize.size2),
-      shadowColor: WidgetStateProperty.all(AppColor.white),
+      shadowColor: WidgetStateProperty.all(AppColor.black),
       shape: WidgetStateProperty.all(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSize.size30),

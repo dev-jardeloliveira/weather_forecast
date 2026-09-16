@@ -17,6 +17,13 @@ class WeatherApiService implements IWeatherApiService {
         AppEndpoint.current,
         queryParameters: {'q': q, 'lang': lang},
       );
+      if (responseJson.statusCode == 400 ||
+          responseJson.statusCode == 401 ||
+          responseJson.statusCode == 403 ||
+          responseJson.statusCode == 404 ||
+          responseJson.statusCode == 500) {
+        return null;
+      }
       if (responseJson.statusCode == 200) {
         final result = CurrentResponse.fromJson(responseJson.data);
         return result;

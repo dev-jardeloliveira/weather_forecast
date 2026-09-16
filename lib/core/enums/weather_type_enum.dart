@@ -65,7 +65,9 @@ enum WeatherCondition {
         return WeatherCondition.fog.path;
 
       default:
-        return WeatherCondition.night.path;
+        return timestamp.hour >= 6 && timestamp.hour < 18
+            ? WeatherCondition.sunny.path
+            : WeatherCondition.night.path;
     }
   }
 }

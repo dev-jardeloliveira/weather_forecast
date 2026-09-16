@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_forecast/core/constants/app_color.dart';
 import 'package:weather_forecast/core/constants/app_size.dart';
 import 'package:weather_forecast/core/constants/app_string.dart';
-import 'package:weather_forecast/core/constants/app_weather.dart';
+import 'package:weather_forecast/core/enums/weather_type_enum.dart';
 import 'package:weather_forecast/features/weather/presentation/viewmodels/weather_vm.dart';
 import 'package:weather_forecast/features/weather/presentation/widgets/button_theme_widget.dart';
 import 'package:weather_forecast/features/weather/presentation/widgets/card_current_widget.dart';
@@ -16,6 +16,7 @@ class WeatherView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentTheme = ref.watch(weatherViewModelProvider);
+
     int? weatherCode = currentTheme.weatherCurrentDto?.current.condition.code;
     DateTime? timestamp =
         currentTheme.weatherCurrentDto?.current.lastUpdated != null
