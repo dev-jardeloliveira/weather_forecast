@@ -10,11 +10,16 @@ import 'package:weather_forecast/features/weather/presentation/widgets/card_curr
 import 'package:weather_forecast/features/weather/presentation/widgets/search_widget.dart';
 import 'package:weather_forecast/features/weather/presentation/widgets/weather_data_forecast_widgets.dart';
 
-class WeatherView extends ConsumerWidget {
+class WeatherView extends ConsumerStatefulWidget {
   const WeatherView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<WeatherView> createState() => _WeatherViewState();
+}
+
+class _WeatherViewState extends ConsumerState<WeatherView> {
+  @override
+  Widget build(BuildContext context) {
     final currentTheme = ref.watch(weatherViewModelProvider);
 
     int? weatherCode = currentTheme.weatherCurrentDto?.current.condition.code;
@@ -22,9 +27,7 @@ class WeatherView extends ConsumerWidget {
         currentTheme.weatherCurrentDto?.current.lastUpdated != null
         ? DateTime.parse(currentTheme.weatherCurrentDto!.current.lastUpdated)
         : DateTime.now();
-    print(
-      'Weather Code: $weatherCode',
-    ); // Debugging line to check the weather code
+    // Debugging line to check the weather code
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -71,5 +74,13 @@ class WeatherView extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(weatherViewModelProvider.notifier).init();
+    });
   }
 }

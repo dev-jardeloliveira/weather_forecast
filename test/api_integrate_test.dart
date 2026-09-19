@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:weather_forecast/core/constants/app_endpoint.dart';
 import 'package:weather_forecast/core/network/dio_client.dart';
 import 'package:weather_forecast/core/services/weather_api_service.dart';
 
@@ -13,8 +14,8 @@ void main() {
     //await setupDependencies();
     serviceWeather = WeatherApiService(dio);
   });
-}
- /*  group('Test integration', () {
+
+  group('Test integration', () {
     test('Deve fazer um Get com Sucesso', () async {
       final response = await dio.get(
         AppEndpoint.current,
@@ -32,6 +33,7 @@ void main() {
       expect(response.statusCode, equals(200));
       expect(response.data, isNotNull);
     });
+
     test('Deve lançar exception', () async {
       try {
         final invalidDio = await _createInvalidKey();
@@ -48,7 +50,7 @@ void main() {
     });
   });
 
-  group('Test service integration', () {
+  group('Test service integration', () async {
     test('Deve fazer um get current com sucesso', () async {
       final result = await serviceWeather?.current(
         q: 'Ponte Nova',
@@ -75,4 +77,3 @@ Future<Dio> _createInvalidKey() async {
   }
   return dio;
 }
- */

@@ -12,7 +12,6 @@ class MockStorage implements IStorageService {
 
   @override
   Future<String?> getString({String? key}) {
-    // TODO: implement getString
     throw UnimplementedError();
   }
 
@@ -26,7 +25,6 @@ class MockStorage implements IStorageService {
 
   @override
   Future<void> setString({String? key, String? value}) {
-    // TODO: implement setString
     throw UnimplementedError();
   }
 }

@@ -11,7 +11,6 @@ class WeatherDataForecastWidgets extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final foreacast = ref.watch(weatherViewModelProvider);
-    final theme = Theme.of(context);
     int? days = 0;
     List<ForecastDayDto> forecastDays = [];
     if (foreacast.weatherForecastDto != null) {

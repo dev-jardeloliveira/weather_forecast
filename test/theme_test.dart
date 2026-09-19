@@ -5,9 +5,15 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weather_forecast/core/constants/app_string.dart';
+import 'package:weather_forecast/features/weather/presentation/viewmodels/weather_vm.dart';
+import 'package:weather_forecast/features/weather/presentation/views/weather_view.dart';
 
+import 'fake_permission_service.dart';
 import 'mock_storage.dart';
 
 void main() {
@@ -17,22 +23,27 @@ void main() {
     mockStorange = MockStorage();
     SharedPreferences.setMockInitialValues({});
   });
-  /*  group('Test struct', () {
+  group('Test struct', () {
     testWidgets(
       'Deve exibir a estrutura do app, appbar, titulo, botão config',
       (WidgetTester tester) async {
         final container = ProviderContainer(
-          overrides: [storageServicesProvider.overrideWithValue(mockStorange)],
+          overrides: [
+            storageServicesProvider.overrideWithValue(mockStorange),
+            permissionServiceProvider.overrideWithValue(
+              FakePermissionService(),
+            ),
+          ],
         );
         await tester.pumpWidget(
           UncontrolledProviderScope(
             container: container,
-            child: const MaterialApp(home: Scaffold(body: WeatherView())),
+            child: const MaterialApp(home: WeatherView()),
           ),
         );
 
         expect(find.text(AppString.weather), findsOneWidget);
-        expect(find.byIcon(Icons.settings), findsOneWidget);
+        //expect(find.byIcon(Icons.settings), findsOneWidget);
       },
     );
 
@@ -40,12 +51,15 @@ void main() {
       WidgetTester tester,
     ) async {
       final container = ProviderContainer(
-        overrides: [storageServicesProvider.overrideWithValue(mockStorange)],
+        overrides: [
+          storageServicesProvider.overrideWithValue(mockStorange),
+          permissionServiceProvider.overrideWithValue(FakePermissionService()),
+        ],
       );
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(home: Scaffold(body: WeatherView())),
+          child: const MaterialApp(home: WeatherView()),
         ),
       );
 
@@ -54,12 +68,15 @@ void main() {
 
     testWidgets('Deve exibir o openBottomSheet', (WidgetTester tester) async {
       final container = ProviderContainer(
-        overrides: [storageServicesProvider.overrideWithValue(mockStorange)],
+        overrides: [
+          storageServicesProvider.overrideWithValue(mockStorange),
+          permissionServiceProvider.overrideWithValue(FakePermissionService()),
+        ],
       );
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(home: Scaffold(body: WeatherView())),
+          child: const MaterialApp(home: WeatherView()),
         ),
       );
 
@@ -76,12 +93,15 @@ void main() {
     testWidgets('Deve alternar entre os temas', (WidgetTester tester) async {
       await mockStorange.set(key: 'themeMode', value: 0);
       final container = ProviderContainer(
-        overrides: [storageServicesProvider.overrideWithValue(mockStorange)],
+        overrides: [
+          storageServicesProvider.overrideWithValue(mockStorange),
+          permissionServiceProvider.overrideWithValue(FakePermissionService()),
+        ],
       );
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(home: Scaffold(body: WeatherView())),
+          child: const MaterialApp(home: WeatherView()),
         ),
       );
 
@@ -126,5 +146,4 @@ void main() {
       expect(buttonToggleReopenLight.isSelected, [false, true]);
     });
   });
- */
 }

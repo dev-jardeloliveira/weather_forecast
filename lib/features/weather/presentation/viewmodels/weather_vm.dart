@@ -34,16 +34,14 @@ final weatherViewModelProvider =
 class WeatherViewModel extends Notifier<WeatherState> {
   var log = Logger(printer: PrettyPrinter(printEmojis: true));
   IGeolocationService get _geolocationService =>
-      ref.watch(geolocationServiceProvider);
+      ref.read(geolocationServiceProvider);
   GetCurrentWeatherUseCase get _getCurrentUS =>
-      ref.watch(getCurrentUserCaseProvider);
+      ref.read(getCurrentUserCaseProvider);
   IPermissionService get _permissionService =>
-      ref.watch(permissionServiceProvider);
-  IStorageService get _storageServices => ref.watch(storageServicesProvider);
+      ref.read(permissionServiceProvider);
+  IStorageService get _storageServices => ref.read(storageServicesProvider);
   @override
   WeatherState build() {
-    checkPermission();
-    loadThemeMode();
     return WeatherState(
       appTheme: AppTheme.lightTheme,
       selectedTheme: 0,
@@ -117,6 +115,11 @@ class WeatherViewModel extends Notifier<WeatherState> {
     } catch (e) {
       log.e('Error getting current location', error: e);
     }
+  }
+
+  Future<void> init() async {
+    await loadThemeMode();
+    await checkPermission();
   }
 
   // Theme
@@ -211,7 +214,7 @@ class WeatherViewModel extends Notifier<WeatherState> {
     await _storageServices.setString(key: 'lastLocation', value: city);
     final currentWeather = await _getCurrentUS.execute(q: city, lang: lang);
     final forecastWeather = await ref
-        .watch(getForecastUserCaseProvider)
+        .read(getForecastUserCaseProvider)
         .execute(q: city, days: days);
     if (currentWeather == null || forecastWeather == null) return;
     state = state.copyWith(
