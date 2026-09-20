@@ -2,7 +2,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:weather_forecast/core/services/ipermission_service.dart';
 
 class FakePermissionService implements IPermissionService {
-  @override
   Future<bool> checkLocationPermission() async {
     return true;
   }

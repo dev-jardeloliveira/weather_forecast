@@ -13,7 +13,10 @@ import 'package:weather_forecast/core/constants/app_string.dart';
 import 'package:weather_forecast/features/weather/presentation/viewmodels/weather_vm.dart';
 import 'package:weather_forecast/features/weather/presentation/views/weather_view.dart';
 
+import 'fake_geolocation_service.dart';
 import 'fake_permission_service.dart';
+import 'fakeget_forecast_weather_uc.dart';
+import 'fakegetcurrentweather_uc.dart';
 import 'mock_storage.dart';
 
 void main() {
@@ -32,6 +35,15 @@ void main() {
             storageServicesProvider.overrideWithValue(mockStorange),
             permissionServiceProvider.overrideWithValue(
               FakePermissionService(),
+            ),
+            geolocationServiceProvider.overrideWithValue(
+              FakeGeolocationService(),
+            ),
+            getCurrentUserCaseProvider.overrideWithValue(
+              FakeGetCurrentWeatherUseCase(),
+            ),
+            getForecastUserCaseProvider.overrideWithValue(
+              FakeGetForecastWeatherUseCase(),
             ),
           ],
         );
@@ -54,6 +66,15 @@ void main() {
         overrides: [
           storageServicesProvider.overrideWithValue(mockStorange),
           permissionServiceProvider.overrideWithValue(FakePermissionService()),
+          geolocationServiceProvider.overrideWithValue(
+            FakeGeolocationService(),
+          ),
+          getCurrentUserCaseProvider.overrideWithValue(
+            FakeGetCurrentWeatherUseCase(),
+          ),
+          getForecastUserCaseProvider.overrideWithValue(
+            FakeGetForecastWeatherUseCase(),
+          ),
         ],
       );
       await tester.pumpWidget(
@@ -71,6 +92,15 @@ void main() {
         overrides: [
           storageServicesProvider.overrideWithValue(mockStorange),
           permissionServiceProvider.overrideWithValue(FakePermissionService()),
+          geolocationServiceProvider.overrideWithValue(
+            FakeGeolocationService(),
+          ),
+          getCurrentUserCaseProvider.overrideWithValue(
+            FakeGetCurrentWeatherUseCase(),
+          ),
+          getForecastUserCaseProvider.overrideWithValue(
+            FakeGetForecastWeatherUseCase(),
+          ),
         ],
       );
       await tester.pumpWidget(
@@ -96,6 +126,15 @@ void main() {
         overrides: [
           storageServicesProvider.overrideWithValue(mockStorange),
           permissionServiceProvider.overrideWithValue(FakePermissionService()),
+          geolocationServiceProvider.overrideWithValue(
+            FakeGeolocationService(),
+          ),
+          getCurrentUserCaseProvider.overrideWithValue(
+            FakeGetCurrentWeatherUseCase(),
+          ),
+          getForecastUserCaseProvider.overrideWithValue(
+            FakeGetForecastWeatherUseCase(),
+          ),
         ],
       );
       await tester.pumpWidget(
