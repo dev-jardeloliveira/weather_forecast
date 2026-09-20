@@ -42,6 +42,7 @@ class WeatherViewModel extends Notifier<WeatherState> {
   IStorageService get _storageServices => ref.read(storageServicesProvider);
   @override
   WeatherState build() {
+    init();
     return WeatherState(
       appTheme: AppTheme.lightTheme,
       selectedTheme: 0,

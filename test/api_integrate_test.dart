@@ -10,6 +10,7 @@ void main() {
   WeatherApiService? serviceWeather;
   setUp(() async {
     await dotenv.load();
+    print('API Key: ${dotenv.env['WEATHER_API_KEY']}');
     dio = DioClient.getInstance();
     //await setupDependencies();
     serviceWeather = WeatherApiService(dio);
@@ -50,7 +51,7 @@ void main() {
     });
   });
 
-  group('Test service integration', () async {
+  group('Test service integration', () {
     test('Deve fazer um get current com sucesso', () async {
       final result = await serviceWeather?.current(
         q: 'Ponte Nova',

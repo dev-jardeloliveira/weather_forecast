@@ -10,16 +10,11 @@ import 'package:weather_forecast/features/weather/presentation/widgets/card_curr
 import 'package:weather_forecast/features/weather/presentation/widgets/search_widget.dart';
 import 'package:weather_forecast/features/weather/presentation/widgets/weather_data_forecast_widgets.dart';
 
-class WeatherView extends ConsumerStatefulWidget {
+class WeatherView extends ConsumerWidget {
   const WeatherView({super.key});
 
   @override
-  ConsumerState<WeatherView> createState() => _WeatherViewState();
-}
-
-class _WeatherViewState extends ConsumerState<WeatherView> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final currentTheme = ref.watch(weatherViewModelProvider);
 
     int? weatherCode = currentTheme.weatherCurrentDto?.current.condition.code;
@@ -74,13 +69,5 @@ class _WeatherViewState extends ConsumerState<WeatherView> {
         ),
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(weatherViewModelProvider.notifier).init();
-    });
   }
 }
