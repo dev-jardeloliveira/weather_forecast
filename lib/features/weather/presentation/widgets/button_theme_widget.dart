@@ -31,11 +31,12 @@ class ButtonThemeWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(weatherViewModelProvider.notifier);
-    final currentTheme = ref.watch(weatherViewModelProvider);
     return IconButton(
-      onPressed: () =>
-          _openBottomSheet(context, viewModel, currentTheme.selectedTheme),
+      onPressed: () {
+        final viewModel = ref.read(weatherViewModelProvider.notifier);
+        final currentTheme = ref.read(weatherViewModelProvider);
+        _openBottomSheet(context, viewModel, currentTheme.selectedTheme);
+      },
       icon: const Icon(Icons.settings, size: AppSize.size20),
     );
   }

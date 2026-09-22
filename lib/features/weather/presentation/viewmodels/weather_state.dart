@@ -12,15 +12,15 @@ class WeatherState {
     required this.appTheme,
     required this.selectedTheme,
     required this.isSelectedLst,
-    required this.weatherCurrentDto,
-    required this.weatherForecastDto,
+    this.weatherCurrentDto,
+    this.weatherForecastDto,
   });
   WeatherState copyWith({
     ThemeData? appTheme,
     required int selectedTheme,
     required List<bool> isSelectedLst,
-    required WeatherCurrentDto weatherCurrentDto,
-    required WeatherForecastDto? weatherForecastDto,
+    WeatherCurrentDto? weatherCurrentDto,
+    WeatherForecastDto? weatherForecastDto,
   }) {
     return WeatherState(
       appTheme: appTheme ?? this.appTheme,

@@ -10,7 +10,6 @@ void main() {
   WeatherApiService? serviceWeather;
   setUp(() async {
     await dotenv.load();
-    print('API Key: ${dotenv.env['WEATHER_API_KEY']}');
     dio = DioClient.getInstance();
     //await setupDependencies();
     serviceWeather = WeatherApiService(dio);

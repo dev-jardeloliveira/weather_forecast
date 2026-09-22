@@ -3,10 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_forecast/core/constants/app_color.dart';
 import 'package:weather_forecast/core/constants/app_size.dart';
 import 'package:weather_forecast/core/constants/app_string.dart';
-import 'package:weather_forecast/core/enums/weather_type_enum.dart';
-import 'package:weather_forecast/features/weather/presentation/viewmodels/weather_vm.dart';
 import 'package:weather_forecast/features/weather/presentation/widgets/button_theme_widget.dart';
 import 'package:weather_forecast/features/weather/presentation/widgets/card_current_widget.dart';
+import 'package:weather_forecast/features/weather/presentation/widgets/image_background_widget.dart';
 import 'package:weather_forecast/features/weather/presentation/widgets/search_widget.dart';
 import 'package:weather_forecast/features/weather/presentation/widgets/weather_data_forecast_widgets.dart';
 
@@ -15,14 +14,6 @@ class WeatherView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentTheme = ref.watch(weatherViewModelProvider);
-
-    int? weatherCode = currentTheme.weatherCurrentDto?.current.condition.code;
-    DateTime? timestamp =
-        currentTheme.weatherCurrentDto?.current.lastUpdated != null
-        ? DateTime.parse(currentTheme.weatherCurrentDto!.current.lastUpdated)
-        : DateTime.now();
-    // Debugging line to check the weather code
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -31,41 +22,30 @@ class WeatherView extends ConsumerWidget {
           AppString.weather,
           style: TextStyle(color: AppColor.black),
         ),
-        actions: [const ButtonThemeWidget()],
+        actions: [const RepaintBoundary(child: ButtonThemeWidget())],
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            opacity: 0.8,
-            // Carrega o recurso de imagem local
-            image: AssetImage(
-              WeatherCondition.getWeatherImage(weatherCode, timestamp),
-            ),
-            // Ajusta a imagem para preencher a tela, preservando a proporção e cortando o excesso
-            fit: BoxFit.cover,
-          ),
-        ),
-
-        child: const Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(AppSize.size10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      spacing: AppSize.size0,
-                      children: [SearchWidget(), CardCurrentWidget()],
+      body: const RepaintBoundary(
+        child: ImageBackgroundWidget(
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(AppSize.size10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [SearchWidget(), CardCurrentWidget()],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Expanded(child: WeatherDataForecastWidgets()),
-          ],
+                ],
+              ),
+              Expanded(child: WeatherDataForecastWidgets()),
+            ],
+          ),
         ),
       ),
     );

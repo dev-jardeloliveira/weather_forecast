@@ -20,9 +20,6 @@ class OpenBottomSheetWidgets extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
-        //final viewModel = ref.watch(weatherViewModelProvider.notifier);
-        //final currentTheme = ref.watch(weatherViewModelProvider);
-
         return SizedBox(
           height: mediaQuery.size.height * 0.3,
           child: Padding(

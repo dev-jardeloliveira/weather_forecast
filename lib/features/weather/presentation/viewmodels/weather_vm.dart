@@ -42,7 +42,6 @@ class WeatherViewModel extends Notifier<WeatherState> {
   IStorageService get _storageServices => ref.read(storageServicesProvider);
   @override
   WeatherState build() {
-    init();
     return WeatherState(
       appTheme: AppTheme.lightTheme,
       selectedTheme: 0,
@@ -126,83 +125,10 @@ class WeatherViewModel extends Notifier<WeatherState> {
   // Theme
   Future<void> loadThemeMode() async {
     final themeMode = await _storageServices.get(key: 'themeMode');
-    if (themeMode == null) {
-      state = state.copyWith(
-        appTheme: AppTheme.lightTheme,
-        selectedTheme: 0,
-        isSelectedLst: [true, false],
-        weatherCurrentDto: WeatherCurrentDto(
-          current: Current(
-            lastUpdated: DateTime.now().toString(),
-            tempC: 0.0,
-            tempF: 0.0,
-            isDay: 0,
-            humidity: 0,
-            feelslikeC: 0.0,
-            feelslikeF: 0.0,
-            uv: 0.0,
-            condition: Condition(text: '', icon: '', code: 0),
-          ),
-          location: Location(country: '', name: '', region: '', localtime: ''),
-        ),
-        weatherForecastDto: WeatherForecastDto(
-          forecast: ForecastDto(forecastday: []),
-          current: CurrentForecast(
-            lastUpdated: '',
-            tempC: 0.0,
-            tempF: 0.0,
-            isDay: 0,
-            humidity: 0,
-            feelslikeC: 0.0,
-            feelslikeF: 0.0,
-            uv: 0.0,
-          ),
-          location: LocationForecast(
-            country: '',
-            name: '',
-            region: '',
-            localtime: '',
-          ),
-        ),
-      );
-    }
     state = state.copyWith(
       appTheme: themeMode == 0 ? AppTheme.lightTheme : AppTheme.darkTheme,
       selectedTheme: themeMode ?? 0,
       isSelectedLst: [themeMode == 0, themeMode == 1],
-      weatherCurrentDto: WeatherCurrentDto(
-        current: Current(
-          lastUpdated: DateTime.now().toString(),
-          tempC: 0.0,
-          tempF: 0.0,
-          isDay: 0,
-          humidity: 0,
-          feelslikeC: 0.0,
-          feelslikeF: 0.0,
-          uv: 0.0,
-          condition: Condition(text: '', icon: '', code: 0),
-        ),
-        location: Location(country: '', name: '', region: '', localtime: ''),
-      ),
-      weatherForecastDto: WeatherForecastDto(
-        forecast: ForecastDto(forecastday: []),
-        current: CurrentForecast(
-          lastUpdated: '',
-          tempC: 0.0,
-          tempF: 0.0,
-          isDay: 0,
-          humidity: 0,
-          feelslikeC: 0.0,
-          feelslikeF: 0.0,
-          uv: 0.0,
-        ),
-        location: LocationForecast(
-          country: '',
-          name: '',
-          region: '',
-          localtime: '',
-        ),
-      ),
     );
   }
 
@@ -233,40 +159,6 @@ class WeatherViewModel extends Notifier<WeatherState> {
       appTheme: islight ? AppTheme.lightTheme : AppTheme.darkTheme,
       selectedTheme: index,
       isSelectedLst: [islight, !islight],
-      weatherCurrentDto: WeatherCurrentDto(
-        current: Current(
-          lastUpdated: DateTime.now().toString(),
-          tempC: 0.0,
-          tempF: 0.0,
-          isDay: 0,
-          humidity: 0,
-          feelslikeC: 0.0,
-          feelslikeF: 0.0,
-          uv: 0.0,
-          condition: Condition(text: '', icon: '', code: 0),
-        ),
-        location: Location(country: '', name: '', region: '', localtime: ''),
-      ),
-
-      weatherForecastDto: WeatherForecastDto(
-        forecast: ForecastDto(forecastday: []),
-        current: CurrentForecast(
-          lastUpdated: '',
-          tempC: 0.0,
-          tempF: 0.0,
-          isDay: 0,
-          humidity: 0,
-          feelslikeC: 0.0,
-          feelslikeF: 0.0,
-          uv: 0.0,
-        ),
-        location: LocationForecast(
-          country: '',
-          name: '',
-          region: '',
-          localtime: '',
-        ),
-      ),
     );
     await getCurrentLocation();
     await _storageServices.set(key: 'themeMode', value: index);
